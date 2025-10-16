@@ -360,16 +360,14 @@ require("lazy").setup({
 					-- mappings = {
 					--   i = { ['<c-enter>'] = 'to_fuzzy_refine' },
 					-- },
-					layout_strategy = "horizontal",
-					layout_config = {
-						horizontal = {
-							prompt_position = "top",
-							with = { padding = 1 },
-							height = { padding = 1 },
-							preview_width = 0.55,
-						},
-					},
-					sorting_strategy = "ascending",
+					layout_strategy = "flex", -- horizontal | vertical
+					-- layout_config = {
+					-- 	horizontal = {
+					-- 		prompt_position = "top", -- bottom
+					-- 		preview_width = 0.55,
+					-- 	},
+					-- },
+					-- sorting_strategy = "ascending", -- descending
 				},
 				-- pickers = {}
 				extensions = {
