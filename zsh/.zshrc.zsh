@@ -9,15 +9,18 @@ export PATH="$HOME/.bin:$PATH"
 
 # ASDF setup
 export ASDF_DATA_DIR="${HOME}/.asdf"
+export ASDF_COMPLETION_DIR="${HOME}/.asdf_data/completions"
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
+export ZSH_DISABLE_COMPFIX=true
+
 # Enable ASDF autocompletion
-fpath=($HOME/.asdf_data/completions $fpath)
+fpath+=($ASDF_COMPLETION_DIR $fpath)
 autoload -Uz compinit && compinit
 
 # Pure
 ZSH_THEME="" # Override defailt oh-my-zsh theme
-fpath+=$(brew --prefix)/share/zsh-functions
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
 autoload -Uz promptinit
 promptinit
 prompt pure
@@ -27,6 +30,10 @@ export PATH=$HOME/.cache/rebar3/bin:$PATH
 
 # Livebook
 export ELIXIR_ERL_OPTION="-epmd_module Elixir.Livebook.EPMD"
+
+unset zle_bracketed_paste
+
+setopt globdots
 
 # Erlang installation thourhg ASDF
 export KERL_CONFIGURE_DISABLE_APPLICATIONS="odbc megaco"
