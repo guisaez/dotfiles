@@ -686,6 +686,14 @@ require("lazy").setup({
 				erlangls = {
 					-- See erlang_ls/erlang_ls.config fore lsp configuration
 				},
+				elixirls = {
+					settings = {
+						suggestSpecs = true,
+						fetchDeps = true,
+					},
+				},
+				-- JSON
+				jsonls = {},
 				--
 				-- elp = {},
 				--
