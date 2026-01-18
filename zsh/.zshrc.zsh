@@ -1,5 +1,5 @@
 # Set vim alias to nvim if nvim is installed
-if command -v nvim  >/dev/null 2&>1; then
+if command -v nvim >/dev/null 2>&1; then
     alias vim='nvim'
 fi
 
