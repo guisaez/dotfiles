@@ -146,16 +146,32 @@ return {
 				root_markers = { "rebar.config", "erlang_ls.config", ".git" },
 				capabilities = capabilities,
 			})
+			vim.lsp.enable("erlangls")
+
+			-- vim.lsp.config("elp", {
+			--     cmd = {"/home/gsantana/.local/bin/elp", "server"},
+			--     filetypes = { "erlang" },
+			--     root_markers = { "rebar.config", "erlang.mk", ".git" },
+			--     capabilities = capabilities,
+			--     settings = {
+			--         elp = {
+			--             diagnostics = {
+			--                 typesOnHover = { enable = true },
+			--                 signatureHelp = { enable = true },
+			--                 disabled = {
+			--                     "W0030",
+			--                     "W0031",
+			--                     "W0032"
+			--                 }
+			--             }
+			--         }
+			--     }
+			-- })
+			-- vim.lsp.enable("elp")
 
 			local servers = {
 				ts_ls = {},
 				gopls = {},
-				elixirls = {
-					settings = {
-						suggestSpecs = true,
-						fetchDeps = true,
-					},
-				},
 				jsonls = {},
 				lua_ls = {
 					settings = {
@@ -242,7 +258,7 @@ return {
 		},
 		opts = {
 			keymap = {
-				preset = "enter",
+				preset = "default",
 			},
 			appearance = {
 				nerd_font_variant = "mono",
