@@ -1,0 +1,33 @@
+general.import = ["~/.config/alacritty/themes/themes/catppuccin_mocha.toml"]
+
+# Alacritty can automatically reload the configuration file when the file is changed
+general.live_config_reload = true
+
+# The `TERM` variable is put under the `env` key which sets environment variables that are passed to the shell when Alacritty is launched
+[env]
+TERM = "xterm-256color"
+
+[window]
+decorations = "buttonless" # Removes the macOS title bar and border
+dynamic_padding = false
+opacity = 0.96 # Takes a value between `0-1` and makes the window semi-transparent
+
+[window.padding]
+x = 10
+y = 5
+
+[font]
+size = 12.0
+
+[font.bold]
+family = "Monaco"
+style = "Bold"
+
+[font.normal]
+family = "Monaco"
+style = "Regular"
+
+[font.italic]
+family = "Monaco"
+style = "Italic"
+

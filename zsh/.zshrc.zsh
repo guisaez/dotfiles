@@ -3,6 +3,9 @@ if command -v nvim >/dev/null 2>&1; then
     alias vim='nvim'
 fi
 
+# RUST
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # HOMEBREW
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"

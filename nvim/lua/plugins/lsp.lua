@@ -258,7 +258,7 @@ return {
 		},
 		opts = {
 			keymap = {
-				preset = "default",
+				["<C-k>"] = { "select_and_accept", "fallback" },
 			},
 			appearance = {
 				nerd_font_variant = "mono",
