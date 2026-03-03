@@ -20,5 +20,7 @@ return {
 		-- Diff management
 		{ "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
 		{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+		-- Terminal mode: switch to normal mode
+		{ "<C-n>", "<C-\\><C-n>", mode = "t", desc = "Enter normal mode in Claude terminal" },
 	},
 }

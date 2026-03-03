@@ -204,7 +204,29 @@ return {
 			"MunifTanjim/nui.nvim",
 		},
 		config = function()
-			vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<CR>', { desc = "Explorer (neo-tree)" })
+			vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<CR>", { desc = "Explorer (neo-tree)" })
+		end,
+	},
+
+	{
+		"beauwilliams/focus.nvim",
+		opts = { winhighlight = true },
+		config = function(_, opts)
+			require("focus").setup(opts)
+			vim.keymap.set("n", "<leader>wft", "<cmd>FocusToggle<CR>", { desc = "[W]indow [F]ocus [T]oggle" })
+
+			local zoomed = false
+			local zoom_restore = nil
+			vim.keymap.set("n", "<leader>wz", function()
+				if zoomed then
+					vim.cmd(zoom_restore)
+					zoomed = false
+				else
+					zoom_restore = vim.fn.winrestcmd()
+					vim.cmd("wincmd _|wincmd |")
+					zoomed = true
+				end
+			end, { desc = "[W]indow [Z]oom toggle" })
 		end,
 	},
 
