@@ -184,15 +184,13 @@ return {
 				},
 			}
 
-			local ensure_installed = vim.tbl_keys(servers or {})
-			vim.list_extend(ensure_installed, {
-				"stylua", -- Used to format Lua code
-			})
-			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+			-- Only install formatters/linters eagerly; LSP servers are installed on-demand
+			-- when the matching filetype is first opened (via automatic_installation below)
+			require("mason-tool-installer").setup({ ensure_installed = { "stylua" } })
 
 			require("mason-lspconfig").setup({
 				ensure_installed = {},
-				automatic_installation = false,
+				automatic_installation = true,
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
