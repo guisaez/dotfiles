@@ -137,14 +137,16 @@ return {
 	-- {
 	-- 	"folke/tokyonight.nvim",
 	-- 	priority = 1000,
-	-- 	config = function()
-	-- 		require("tokyonight").setup({
-	-- 			styles = {
-	-- 				comments = { italic = true },
-	-- 				sidebars = { transparent = true },
-	-- 			},
-	-- 		})
-	-- 		vim.cmd.colorscheme("tokyonight-night")
+	-- 	opts = {
+	-- 		style = "moon",
+	-- 		styles = {
+	-- 			comments = { italic = true },
+	-- 			keywords = { italic = true },
+	-- 		},
+	-- 	},
+	-- 	config = function(_, opts)
+	-- 		require("tokyonight").setup(opts)
+	-- 		vim.cmd.colorscheme("tokyonight-moon")
 	-- 	end,
 	-- },
 
@@ -155,8 +157,9 @@ return {
 		opts = {
 			flavour = "macchiato",
 			transparent_background = false,
+			term_colors = false,
 			styles = {
-				comments = { "italic" }, -- This is the magic line
+				comments = { "italic" },
 				conditionals = { "italic" },
 				loops = {},
 				functions = {},
@@ -180,9 +183,10 @@ return {
 					},
 				},
 				inlay_hints = {
-					background = true,
+					background = false,
 				},
 			},
+			auto_integrations = true,
 			integrations = {
 				cmp = true,
 				gitsigns = true,
@@ -191,10 +195,13 @@ return {
 					enabled = true,
 				},
 			},
+			custom_highlights = function(colors)
+				return {}
+			end,
 		},
 		config = function(_, opts)
 			require("catppuccin").setup(opts)
-			vim.cmd.colorscheme("catppuccin")
+			vim.cmd.colorscheme("catppuccin-nvim")
 		end,
 	},
 
@@ -269,7 +276,7 @@ return {
 			split = { bufnew = true, tmux = true },
 			ui = {
 				cursorline = false,
-				winhighlight = true,
+				winhighlight = false,
 			},
 		},
 		config = function(_, opts)
