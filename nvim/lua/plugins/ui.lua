@@ -261,17 +261,21 @@ return {
 	{
 		"beauwilliams/focus.nvim",
 		opts = {
-			winhighlight = true,
-			split = { tmux = true },
+			enable = true,
+			commands = true,
+			autoresize = {
+				enable = false,
+			},
+			split = { bufnew = true, tmux = true },
+			ui = {
+				cursorline = false,
+				winhighlight = true,
+			},
 		},
 		config = function(_, opts)
 			require("focus").setup(opts)
 
-			vim.api.nvim_create_autocmd("TermOpen", {
-				callback = function()
-					vim.cmd("FocusDisableWindow")
-				end,
-			})
+			-- Keymaps
 			vim.keymap.set("n", "<leader>wft", "<cmd>FocusToggle<CR>", { desc = "[W]indow [F]ocus [T]oggle" })
 			vim.keymap.set("n", "<leader>wfe", "<cmd>FocusEqualise<CR>", { desc = "[W]indow [F]ocus [E]qualise" })
 			vim.keymap.set("n", "<leader>wm", "<cmd>FocusMaximise<CR>", { desc = "[W]indow [M]aximise" })
