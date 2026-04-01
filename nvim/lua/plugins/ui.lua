@@ -134,17 +134,67 @@ return {
 		end,
 	},
 
+	-- {
+	-- 	"folke/tokyonight.nvim",
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		require("tokyonight").setup({
+	-- 			styles = {
+	-- 				comments = { italic = true },
+	-- 				sidebars = { transparent = true },
+	-- 			},
+	-- 		})
+	-- 		vim.cmd.colorscheme("tokyonight-night")
+	-- 	end,
+	-- },
+
 	{
-		"folke/tokyonight.nvim",
+		"catppuccin/nvim",
+		name = "catppuccin",
 		priority = 1000,
-		config = function()
-			require("tokyonight").setup({
-				styles = {
-					comments = { italic = true },
-					sidebars = { transparent = true },
+		opts = {
+			flavour = "macchiato",
+			transparent_background = false,
+			styles = {
+				comments = { "italic" }, -- This is the magic line
+				conditionals = { "italic" },
+				loops = {},
+				functions = {},
+				keywords = { "italic" },
+				strings = {},
+				variables = {},
+				numbers = {},
+				booleans = {},
+				properties = {},
+				types = {},
+				operators = {},
+			},
+			lsp_styles = {
+				virtual_text = {
+					{
+						errors = { "italic" },
+						hints = { "italic" },
+						warnings = { "italic" },
+						information = { "italic" },
+						ok = { "italic" },
+					},
 				},
-			})
-			vim.cmd.colorscheme("tokyonight-night")
+				inlay_hints = {
+					background = true,
+				},
+			},
+			integrations = {
+				cmp = true,
+				gitsigns = true,
+				nvimtree = true,
+				mini = {
+					enabled = true,
+				},
+			},
+		},
+		config = function(_, opts)
+			require("catppuccin").setup(opts)
+			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
 
