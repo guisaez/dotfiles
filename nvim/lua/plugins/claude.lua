@@ -1,4 +1,5 @@
-local active_profile = "-work"
+local active_profile = "default"
+local switch_token = 0
 
 return {
 	"coder/claudecode.nvim",
@@ -8,38 +9,79 @@ return {
 		log_level = "warn",
 	},
 	config = function(_, opts)
-		vim.env.CLAUDE_CONFIG_DIR = vim.fn.expand("~/.claude" .. active_profile)
+		local function sync_claude_env(profile)
+			if profile == "default" then
+				vim.env.CLAUDE_CONFIG_DIR = nil
+			else
+				vim.env.CLAUDE_CONFIG_DIR = vim.fn.expand("~/.claude" .. profile)
+				vim.fn.mkdir(vim.env.CLAUDE_CONFIG_DIR, "p")
+			end
+		end
+
+		-- Initialize the default profile on startup
+		sync_claude_env(active_profile)
 
 		local plugin = require("claudecode")
 		plugin.setup(opts)
 
-		local function switch_and_launch(profile_suffix)
-			if active_profile == profile_suffix then
+		local function kill_claude_terminal()
+			local killed = false
+			for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+				if not vim.api.nvim_buf_is_valid(buf) then
+					goto continue
+				end
+				local ok, buftype = pcall(function()
+					return vim.bo[buf].buftype
+				end)
+				if ok and buftype == "terminal" and vim.api.nvim_buf_get_name(buf):match("claude") then
+					local job_id = vim.b[buf].terminal_job_id
+					if job_id then
+						pcall(vim.fn.jobstop, job_id)
+					end
+					pcall(vim.api.nvim_buf_delete, buf, { force = true })
+					killed = true
+				end
+				::continue::
+			end
+			return killed
+		end
+
+		local function switch_profile(new_profile)
+			if active_profile == new_profile then
 				vim.cmd("ClaudeCode")
 				return
 			end
 
-			active_profile = profile_suffix
-			vim.env.CLAUDE_CONFIG_DIR = vim.fn.expand("~/.claude" .. active_profile)
-			vim.fn.mkdir(vim.env.CLAUDE_CONFIG_DIR, "p")
+			active_profile = new_profile
+			sync_claude_env(active_profile)
+			vim.notify("Claude: " .. active_profile:gsub("^%l", string.upper))
 
-			-- Close if open, then reopen after env is set
-			vim.cmd("ClaudeCode") -- toggle close
-			vim.defer_fn(function()
-				vim.cmd("ClaudeCode") -- reopen with new env
-				vim.notify(
-					"Claude account: " .. (profile_suffix == "-work" and "Work" or "Personal"),
-					vim.log.levels.INFO
-				)
-			end, 1000)
+			local was_running = kill_claude_terminal()
+			if was_running then
+				-- Suppress expected errors from force-killing Claude (exit -1, ECONNRESET)
+				local orig_notify = vim.notify
+				vim.notify = function(msg, ...)
+					if type(msg) == "string" and (msg:match("exited with code %-1") or msg:match("ECONNRESET")) then
+						return
+					end
+					return orig_notify(msg, ...)
+				end
+				vim.defer_fn(function()
+					vim.notify = orig_notify
+					vim.cmd("ClaudeCode")
+				end, 500)
+			end
 		end
 
-		vim.api.nvim_create_user_command("ClaudePersonal", function()
-			switch_and_launch("-personal")
-		end, {})
-
+		-- User Commands
 		vim.api.nvim_create_user_command("ClaudeWork", function()
-			switch_and_launch("-work")
+			switch_profile("-work")
+		end, {})
+		vim.api.nvim_create_user_command("ClaudePersonal", function()
+			switch_profile("-personal")
+		end, {})
+		vim.api.nvim_create_user_command("ClaudeDefault", function()
+			switch_profile("default")
 		end, {})
 	end,
 	keys = {
@@ -59,8 +101,9 @@ return {
 		},
 		{ "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
 		{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
-		{ "<leader>ap", "<cmd>ClaudePersonal<cr>", desc = "Switch to Personal Claude" },
-		{ "<leader>aw", "<cmd>ClaudeWork<cr>", desc = "Switch to Work Claude" },
+		{ "<leader>aw", "<cmd>ClaudeWork<cr>", desc = "Switch to Work (API Key)" },
+		{ "<leader>ap", "<cmd>ClaudePersonal<cr>", desc = "Switch to Personal (API Key)" },
+		{ "<leader>ax", "<cmd>ClaudeDefault<cr>", desc = "Switch to Standard (OAuth)" },
 		{ "<C-n>", "<C-\\><C-n>", mode = "t", desc = "Enter normal mode in Claude terminal" },
 	},
 }

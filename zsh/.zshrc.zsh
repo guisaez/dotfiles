@@ -12,7 +12,8 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
 # ASDF setup
-export ASDF_DATA_DIR="${HOME}/.asdf" export ASDF_COMPLETION_DIR="${HOME}/.asdf_data/completions"
+export ASDF_DATA_DIR="${HOME}/.asdf"
+export ASDF_COMPLETION_DIR="${HOME}/.asdf_data/completions"
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 export ZSH_DISABLE_COMPFIX=true
@@ -60,5 +61,7 @@ export NVM_DIR="$HOME/.nvm"
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-alias claude-personal='CLAUDE_CONFIG_DIR=~/.claude-personal claude'
+# Claude Code multi-account
 alias claude-work='CLAUDE_CONFIG_DIR=~/.claude-work claude'
+alias claude-personal='CLAUDE_CONFIG_DIR=~/.claude-personal claude'
+
