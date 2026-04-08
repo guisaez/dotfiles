@@ -26,6 +26,9 @@ vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "[F]ormat Current 
 -- Open Quickfix
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
+-- Open full diagnostic message in a floating window (wraps long messages)
+vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, { desc = "Show diagnostic float" })
+
 vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>cp", "<cmd>cprev<CR>zz")
 

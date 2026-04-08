@@ -1,5 +1,4 @@
 local active_profile = "default"
-local switch_token = 0
 
 return {
 	"coder/claudecode.nvim",
