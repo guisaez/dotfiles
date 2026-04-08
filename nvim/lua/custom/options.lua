@@ -91,6 +91,9 @@ vim.o.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursors
 vim.o.scrolloff = 10
 
+-- Automatically reload files changed outside of Neovim
+vim.o.autoread = true
+
 -- if performing an operation that would fail due to unsaved chanages in the buffer (like: `:q`),
 -- instead rasise a fialog asking if you wish to save the current files(s)
 -- See `:help 'confirm'`

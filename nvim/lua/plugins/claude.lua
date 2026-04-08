@@ -73,6 +73,14 @@ return {
 			end
 		end
 
+		-- Buffer-local <Esc> to exit terminal mode only in Claude terminals
+		vim.api.nvim_create_autocmd("TermOpen", {
+			pattern = "*claude*",
+			callback = function(ev)
+				vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { buffer = ev.buf, desc = "Exit terminal mode" })
+			end,
+		})
+
 		-- User Commands
 		vim.api.nvim_create_user_command("ClaudeWork", function()
 			switch_profile("-work")

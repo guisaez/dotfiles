@@ -12,6 +12,16 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Trigger checktime to pick up external file changes (e.g. from Claude)
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+	desc = "Reload files changed outside of Neovim",
+	callback = function()
+		if vim.fn.mode() ~= "c" then
+			vim.cmd("checktime")
+		end
+	end,
+})
+
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	desc = "Remove trailing whitspaces from buffer on write",
 	pattern = { "*" },
