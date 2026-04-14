@@ -56,6 +56,8 @@ return {
 				{ "<leader>a", group = "[A]I/Claude" },
 				{ "<leader>s", group = "[S]earch" },
 				{ "<leader>t", group = "[T]oggle" },
+				{ "<leader>T", group = "[T]ab" },
+				{ "<leader>w", group = "[W]indow" },
 				{ "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
 			},
 		},

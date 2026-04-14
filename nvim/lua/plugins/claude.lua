@@ -4,8 +4,16 @@ return {
 	"coder/claudecode.nvim",
 	dependencies = { "folke/snacks.nvim" },
 	opts = {
-		terminal_cmd = "claude",
-		log_level = "warn",
+		log_level = "error",
+		terminal = {
+			split_width_percentage = 0.5,
+		},
+		diff_opts = {
+			layout = "horizontal",
+			open_in_new_tab = true,
+			keep_terminal_focus = false, -- If true, moves focus back to terminal after diff opens
+			hide_terminal_in_new_tab = true,
+		},
 	},
 	config = function(_, opts)
 		local function sync_claude_env(profile)
