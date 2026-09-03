@@ -1,0 +1,12 @@
+[".config/nvim"]
+    type = "git-repo"
+    # Private repo: clone over SSH so it works without a token.
+    url = "git@github.com:guisaez/nvim-config.git"
+    refreshPeriod = "168h"
+    [".config/nvim".pull]
+        args = ["--ff-only"]
+
+[".config/ghostty/shaders"]
+    type = "git-repo"
+    url = "https://github.com/sahaj-b/ghostty-cursor-shaders"
+    refreshPeriod = "168h"

@@ -1,0 +1,28 @@
+# ~/.local/share/chezmoi/.chezmoi.toml.tmpl
+
+# Detect OS type (e.g., "linux", "darwin" for macOS, "windows")
+{{- $osID := .chezmoi.os -}}
+
+# Detect specific Linux distros if needed
+{{- if eq .chezmoi.os "linux" }}
+{{-     if hasKey .chezmoi.osRelease "id" }}
+{{-         $osID = .chezmoi.osRelease.id }}
+{{-     end }}
+{{- end}}
+
+# Set a boolean for work vs personal machines
+# You can prompt yourself during 'chezmoi init' or check the hostname
+{{- $isWork := false }}
+{{- if contains "work-laptop" .chezmoi.hostname }}
+{{- $isWork = true }}
+{{- end }}
+
+[data]
+    osid = {{ $osID | quote }}
+    is_work = {{ $isWork }}
+    # Add common paths that change across OS types
+    {{- if eq $osID "darwin" }}
+    shell = "/bin/zsh"
+    {{- else }}
+    shell = "/bin/bash"
+    {{- end }}

@@ -1,0 +1,112 @@
+# Ghostty configuration
+# Docs: https://ghostty.org/docs/config/reference
+#
+# Reload config: <ctrl><shift><,> or <cmd><shift><,>
+
+# ── Appearance ────────────────────────────────────────────────────────────────
+
+# theme = Slate
+# theme = Rose Pine Moon
+# theme = Kanagawa Wave
+# theme = Gruvbox Material Dark
+theme = Catppuccin Macchiato
+
+background-opacity = 1
+
+# ── Window ────────────────────────────────────────────────────────────────────
+
+window-decoration = auto
+window-padding-x = 10
+window-padding-y = 10
+# Balance padding so split panes look even.
+window-padding-balance = true
+# New windows/tabs open in the same directory as the current one.
+window-inherit-working-directory = true
+tab-inherit-working-directory = true
+
+# ── Font ──────────────────────────────────────────────────────────────────────
+
+font-family        = Monaco
+font-family-italic = Menlo
+font-family-bold   = Menlo
+font-size          = 12
+# Render text slightly bolder — useful on non-retina displays.
+font-thicken = true
+
+# ── Clipboard ─────────────────────────────────────────────────────────────────
+
+# Automatically copy selected text to the system clipboard.
+copy-on-select = clipboard
+clipboard-read  = allow
+clipboard-write = allow
+# Strip trailing whitespace when copying — avoids accidental trailing spaces in pastes.
+clipboard-trim-trailing-spaces = true
+# Warn before pasting content that looks like it could be malicious (e.g. multi-line with commands).
+clipboard-paste-protection = true
+
+# ── Shell Integration ─────────────────────────────────────────────────────────
+
+shell-integration = detect
+
+# Features enabled (prefix with `no-` to disable individually, or use true/false for all):
+#   cursor       — bar cursor at the prompt
+#   sudo         — sudo wrapper to preserve terminfo
+#   title        — set window title via shell integration
+#   ssh-env      — convert TERM to xterm-256color on SSH and propagate COLORTERM vars
+#   ssh-terminfo — auto-install Ghostty terminfo on remote hosts via infocmp/tic
+#   path         — add Ghostty's binary dir to PATH
+shell-integration-features = sudo, cursor, ssh-env, title, ssh-terminfo, path
+
+# TERM value reported to the shell. Use `ghostty` for full feature support.
+# If Vim key protocols break, set keyprotocol in Vim: `:set keyprotocol=ghostty:kitty`
+# (requires Vim with the fix from https://github.com/vim/vim/pull/13211)
+term = ghostty
+
+# Don't show a confirmation dialog when closing a terminal surface.
+confirm-close-surface = false
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+
+# Treat the Option key as Alt so terminal apps receive proper escape sequences.
+macos-option-as-alt = true
+# Hide the titlebar while keeping native borders and rounded corners.
+macos-titlebar-style = hidden
+# Hide the traffic-light window buttons.
+macos-window-buttons = hidden
+# Non-native fullscreen: padded-notch leaves space around the notch.
+# Options: true (hide menu bar) | false (native) | visible-menu | padded-notch
+macos-non-native-fullscreen = padded-notch
+# Automatically enable Secure Input when a password prompt is detected.
+macos-auto-secure-input = true
+
+# ── Cursor ────────────────────────────────────────────────────────────────────
+
+cursor-style       = block
+cursor-style-blink = false
+# Allow clicking to reposition the cursor inside the current prompt line.
+# Requires shell integration with OSC 133 prompt marking.
+cursor-click-to-move = true
+
+# ── Mouse ─────────────────────────────────────────────────────────────────────
+
+# Hide the pointer while typing; it reappears on mouse movement.
+mouse-hide-while-typing  = true
+mouse-scroll-multiplier  = 2
+# Disable mouse reporting so selection always works regardless of app requests.
+# Toggle at runtime with the `toggle_mouse_reporting` keybind action.
+mouse-reporting = false
+# Scroll to the bottom on keystroke or when there's no new output.
+scroll-to-bottom = keystroke, no-output
+
+# ── Behavior ──────────────────────────────────────────────────────────────────
+
+focus-follows-mouse = false
+# Quit the app when the last window closes (no lingering dock icon).
+quit-after-last-window-closed = true
+# Check for updates automatically but don't install without prompting.
+auto-update = check
+
+# ── Custom Shader ─────────────────────────────────────────────────────────────
+
+# Cursor warp effect shader.
+custom-shader = ~/.config/ghostty/shaders/cursor_warp.glsl

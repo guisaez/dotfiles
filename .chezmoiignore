@@ -1,0 +1,6 @@
+# Repo documentation — not a dotfile, don't deploy to ~/README.md
+README.md
+
+# Placeholder that anchors the private_dot_config source dir in git
+# (keeps ~/.config at 0700); don't deploy it.
+.config/.gitkeep
