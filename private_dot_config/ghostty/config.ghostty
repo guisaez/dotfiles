@@ -60,7 +60,7 @@ shell-integration-features = sudo, cursor, ssh-env, title, ssh-terminfo, path
 # TERM value reported to the shell. Use `ghostty` for full feature support.
 # If Vim key protocols break, set keyprotocol in Vim: `:set keyprotocol=ghostty:kitty`
 # (requires Vim with the fix from https://github.com/vim/vim/pull/13211)
-term = ghostty
+term = xterm-256color
 
 # Don't show a confirmation dialog when closing a terminal surface.
 confirm-close-surface = false
